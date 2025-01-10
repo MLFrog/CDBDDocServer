@@ -10,9 +10,9 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "doc_kind_cd")
-@Comment("문서분류코드")
-public class DocKindCdJpaEntity {
+@Table(name = "doc_kind")
+@Comment("문서분류")
+public class DocKindJpaEntity {
 	@Id
 	@Column(name = "kind_cd")
 	@Comment("분류코드")

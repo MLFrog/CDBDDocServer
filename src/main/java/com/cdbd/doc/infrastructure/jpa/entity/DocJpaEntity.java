@@ -1,6 +1,6 @@
 package com.cdbd.doc.infrastructure.jpa.entity;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import org.hibernate.annotations.Comment;
 
@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 @Table(name = "document")
 @Comment("문서")
 public class DocJpaEntity {
