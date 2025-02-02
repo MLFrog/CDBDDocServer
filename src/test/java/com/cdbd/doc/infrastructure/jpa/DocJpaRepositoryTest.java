@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -17,33 +18,79 @@ import com.cdbd.doc.infrastructure.jpa.repository.DocJpaRepository;
 public class DocJpaRepositoryTest{
 	@Autowired
 	private DocJpaRepository docJpaRepository; 
+	
+	private DocJpaEntity docJpaEntity;
 
+	final private String testDocId = "81c9ef13-a2c1-4421-bee3-cb0c7c9e3fe4";
+	final private String testDocKindCd = "";
+	final private String testDocVersionId = "";
+	final private String testFileExt = "pdf";
+	final private String testFileName = "휴가계";
+	final private String testUserId = "test01";
+	
+	@BeforeEach
+	public void 엔터티생성() {
+		// given
+		docJpaEntity = new DocJpaEntity();
+		
+		docJpaEntity.setDocId(testDocId);
+		docJpaEntity.setDocKindCd(testDocKindCd);
+		docJpaEntity.setDocVersionId(testDocVersionId);
+		docJpaEntity.setFileExt(testFileExt);
+		docJpaEntity.setFileName(testFileName);
+		docJpaEntity.setUserId(testUserId);
+		docJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		docJpaEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+	}
+	
 	@Test
 	public void 문서생성하기() {
 		// given
-		DocJpaEntity docJpaEntity = new DocJpaEntity();
-		
-		docJpaEntity.setDocId(UUID.randomUUID().toString());
-		docJpaEntity.setDocKindCd("");
-		docJpaEntity.setDocVersionId("");
-		docJpaEntity.setFileExt("pdf");
-		docJpaEntity.setFileName("휴가계");
-		docJpaEntity.setUserId("test01");
-		docJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		docJpaEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 		
 		// when
-		DocJpaEntity savedEntity = docJpaRepository.save(docJpaEntity);
+		DocJpaEntity docJpaResultEntity = docJpaRepository.save(docJpaEntity);
 		
 		// then
-		assertThat(savedEntity.getDocId()).isNotNull();
-		assertThat(savedEntity.getDocKindCd()).isEqualTo("");
-		assertThat(savedEntity.getDocVersionId()).isEqualTo("");
-		assertThat(savedEntity.getFileExt()).isEqualTo("pdf");
-		assertThat(savedEntity.getFileName()).isEqualTo("휴가계");
-		assertThat(savedEntity.getUserId()).isEqualTo("test01");
-		assertThat(savedEntity.getCreatedAt()).isNotNull();
-		assertThat(savedEntity.getUpdatedAt()).isNotNull();
+		assertThat(docJpaResultEntity.getDocId()).isNotNull();
+		assertThat(docJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
+		assertThat(docJpaResultEntity.getDocVersionId()).isEqualTo(testDocVersionId);
+		assertThat(docJpaResultEntity.getFileExt()).isEqualTo(testFileExt);
+		assertThat(docJpaResultEntity.getFileName()).isEqualTo(testFileName);
+		assertThat(docJpaResultEntity.getUserId()).isEqualTo(testUserId);
+		assertThat(docJpaResultEntity.getUpdatedAt()).isNotNull();
+		assertThat(docJpaResultEntity.getCreatedAt()).isNotNull();
 	}
 	
+	@Test
+	public void 문서조회하기() {
+		// given
+		docJpaRepository.save(docJpaEntity);
+		
+		// when
+		DocJpaEntity docJpaResultEntity = docJpaRepository.findById(testDocId).orElse(null);
+		
+		// then
+		assertThat(docJpaResultEntity.getDocId()).isEqualTo(testDocId);
+		assertThat(docJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
+		assertThat(docJpaResultEntity.getDocVersionId()).isEqualTo(testDocVersionId);
+		assertThat(docJpaResultEntity.getFileExt()).isEqualTo(testFileExt);
+		assertThat(docJpaResultEntity.getFileName()).isEqualTo(testFileName);
+		assertThat(docJpaResultEntity.getUserId()).isEqualTo(testUserId);
+		assertThat(docJpaResultEntity.getUpdatedAt()).isNotNull();
+		assertThat(docJpaResultEntity.getCreatedAt()).isNotNull();
+	}
+	
+	@Test
+	public void 문서삭제하기() {
+		// given 
+		docJpaRepository.save(docJpaEntity);
+		
+		// when 
+		docJpaRepository.deleteById(testDocId);
+		
+		// then 
+		DocJpaEntity docJpaResultEntity = docJpaRepository.findById(testDocId).orElse(null);
+		
+		assertThat(docJpaResultEntity).isNull();
+	}
 }

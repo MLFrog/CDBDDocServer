@@ -1,5 +1,7 @@
 package com.cdbd.doc.infrastructure.jpa.entity;
 
+import java.sql.Timestamp;
+
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
@@ -24,5 +26,5 @@ public class DocVerJpaEntity {
 	
 	@Column(name = "created_at")
 	@Comment("등록일")
-	private String createdAt;
+	private Timestamp createdAt;
 }
