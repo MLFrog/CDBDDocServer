@@ -20,9 +20,13 @@ public class DocVerJpaEntity {
 	@Comment("문서버전ID")
 	private String docVerId;
 	
-	@Column(name = "doc_id")
-	@Comment("문서번호")
-	private String docId;
+	@Column(name = "user_id")
+	@Comment("사용자ID")
+	private String userId;
+	
+	@Column(name = "file_id")
+	@Comment("파일ID")
+	private String fileId;
 	
 	@Column(name = "created_at")
 	@Comment("등록일")

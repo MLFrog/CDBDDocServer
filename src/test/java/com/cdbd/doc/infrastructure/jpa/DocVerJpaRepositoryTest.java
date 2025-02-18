@@ -20,7 +20,8 @@ public class DocVerJpaRepositoryTest {
 	private DocVerJpaEntity docVerJpaEntity;
 	
 	final private String testDocVerId = "001";
-	final private String testDocId = "81c9ef13-a2c1-4421-bee3-cb0c7c9e3fe4";
+	final private String testFileId = "7f06bd96-e11d-4c2a-9b9c-c68b45d8a65e";
+	final private String testUserId = "testUser";
 	
 	@BeforeEach
 	public void 엔터티생성() {
@@ -28,7 +29,8 @@ public class DocVerJpaRepositoryTest {
 		docVerJpaEntity = new DocVerJpaEntity();
 		
 		docVerJpaEntity.setDocVerId(testDocVerId);
-		docVerJpaEntity.setDocId(testDocId);
+		docVerJpaEntity.setFileId(testFileId);
+		docVerJpaEntity.setUserId(testUserId);
 		docVerJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 	
@@ -41,7 +43,8 @@ public class DocVerJpaRepositoryTest {
 		
 		// then
 		assertThat(docVerJpaResultEntity.getDocVerId()).isEqualTo(testDocVerId);
-		assertThat(docVerJpaResultEntity.getDocId()).isEqualTo(testDocId);
+		assertThat(docVerJpaResultEntity.getFileId()).isEqualTo(testFileId);
+		assertThat(docVerJpaResultEntity.getUserId()).isEqualTo(testUserId);
 		assertThat(docVerJpaResultEntity.getCreatedAt()).isNotNull();
 	}
 	
@@ -55,7 +58,8 @@ public class DocVerJpaRepositoryTest {
 		
 		// then
 		assertThat(docVerJpaResultEntity.getDocVerId()).isEqualTo(testDocVerId);
-		assertThat(docVerJpaResultEntity.getDocId()).isEqualTo(testDocId);
+		assertThat(docVerJpaResultEntity.getFileId()).isEqualTo(testFileId);
+		assertThat(docVerJpaResultEntity.getUserId()).isEqualTo(testUserId);
 		assertThat(docVerJpaResultEntity.getCreatedAt()).isNotNull();
 	}
 	

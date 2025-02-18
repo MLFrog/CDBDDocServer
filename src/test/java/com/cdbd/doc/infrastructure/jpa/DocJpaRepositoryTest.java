@@ -22,10 +22,8 @@ public class DocJpaRepositoryTest{
 	private DocJpaEntity docJpaEntity;
 
 	final private String testDocId = "81c9ef13-a2c1-4421-bee3-cb0c7c9e3fe4";
-	final private String testDocKindCd = "";
+	final private String testDocKindCd = "DOC001";
 	final private String testDocVersionId = "";
-	final private String testFileExt = "pdf";
-	final private String testFileName = "휴가계";
 	final private String testUserId = "test01";
 	
 	@BeforeEach
@@ -36,8 +34,6 @@ public class DocJpaRepositoryTest{
 		docJpaEntity.setDocId(testDocId);
 		docJpaEntity.setDocKindCd(testDocKindCd);
 		docJpaEntity.setDocVersionId(testDocVersionId);
-		docJpaEntity.setFileExt(testFileExt);
-		docJpaEntity.setFileName(testFileName);
 		docJpaEntity.setUserId(testUserId);
 		docJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 		docJpaEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
@@ -54,8 +50,6 @@ public class DocJpaRepositoryTest{
 		assertThat(docJpaResultEntity.getDocId()).isNotNull();
 		assertThat(docJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
 		assertThat(docJpaResultEntity.getDocVersionId()).isEqualTo(testDocVersionId);
-		assertThat(docJpaResultEntity.getFileExt()).isEqualTo(testFileExt);
-		assertThat(docJpaResultEntity.getFileName()).isEqualTo(testFileName);
 		assertThat(docJpaResultEntity.getUserId()).isEqualTo(testUserId);
 		assertThat(docJpaResultEntity.getUpdatedAt()).isNotNull();
 		assertThat(docJpaResultEntity.getCreatedAt()).isNotNull();
@@ -73,8 +67,6 @@ public class DocJpaRepositoryTest{
 		assertThat(docJpaResultEntity.getDocId()).isEqualTo(testDocId);
 		assertThat(docJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
 		assertThat(docJpaResultEntity.getDocVersionId()).isEqualTo(testDocVersionId);
-		assertThat(docJpaResultEntity.getFileExt()).isEqualTo(testFileExt);
-		assertThat(docJpaResultEntity.getFileName()).isEqualTo(testFileName);
 		assertThat(docJpaResultEntity.getUserId()).isEqualTo(testUserId);
 		assertThat(docJpaResultEntity.getUpdatedAt()).isNotNull();
 		assertThat(docJpaResultEntity.getCreatedAt()).isNotNull();

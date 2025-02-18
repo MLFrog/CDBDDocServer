@@ -24,21 +24,13 @@ public class DocJpaEntity {
 	@Comment("사용자ID")	
 	private String userId;
 	
-	@Column(name = "file_name")
-	@Comment("파일명")
-	private String fileName;
+	@Column(name = "doc_kind_cd")
+	@Comment("문서분류코드")
+	private String docKindCd;
 	
 	@Column(name = "doc_version_id")
 	@Comment("문서버전ID")
 	private String docVersionId;
-	
-	@Column(name = "doc_kind_cd")
-	@Comment("문서버전코드")
-	private String docKindCd;
-	
-	@Column(name = "file_ext")
-	@Comment("파일확장자")
-	private String fileExt;
 	
 	@Column(name = "created_at")
 	@Comment("생성일시")

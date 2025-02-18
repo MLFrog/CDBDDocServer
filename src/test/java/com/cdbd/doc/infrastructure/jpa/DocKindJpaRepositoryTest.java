@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cdbd.doc.infrastructure.jpa.entity.DocKindJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.entity.kindId.KindId;
 import com.cdbd.doc.infrastructure.jpa.repository.DocKindJpaRepository;
 
 @SpringBootTest
@@ -21,28 +20,18 @@ public class DocKindJpaRepositoryTest {
 	
 	private DocKindJpaEntity docKindJpaEntity;
 	
-	final private String testKindCd = "DOC001";
-	final private String testPKindCd = "0";
-	final private String testKindNm = "계약서";
+	final private String testDocKindCd = "DOC001";
+	final private String testPDocKindCd = "0";
+	final private String testDocKindNm = "계약서";
 	
 	@BeforeEach
 	public void 엔터티생성() {
-		KindId kindId = 복합키생성하기();
-		
 		docKindJpaEntity = new DocKindJpaEntity();
 		
-		docKindJpaEntity.setKindId(kindId);
-		docKindJpaEntity.setKindNm(testKindNm);
+		docKindJpaEntity.setDocKindCd(testDocKindCd);
+		docKindJpaEntity.setPDocKindCd(testPDocKindCd);
+		docKindJpaEntity.setDocKindNm(testDocKindNm);
 		docKindJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-	}
-	
-	public KindId 복합키생성하기() {
-		KindId kindId = new KindId();
-		
-		kindId.setKindCd(testKindCd);
-		kindId.setPKindCd(testPKindCd);
-		
-		return kindId;
 	}
 	
 	@Test
@@ -53,9 +42,9 @@ public class DocKindJpaRepositoryTest {
 		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.save(docKindJpaEntity);
 		
 		/// then
-		assertThat(docKindJpaResultEntity.getKindId().getKindCd()).isEqualTo(testKindCd);
-		assertThat(docKindJpaResultEntity.getKindId().getPKindCd()).isEqualTo(testPKindCd);
-		assertThat(docKindJpaResultEntity.getKindNm()).isEqualTo(testKindNm);
+		assertThat(docKindJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
+		assertThat(docKindJpaResultEntity.getPDocKindCd()).isEqualTo(testPDocKindCd);
+		assertThat(docKindJpaResultEntity.getDocKindNm()).isEqualTo(testDocKindNm);
 		assertThat(docKindJpaResultEntity.getCreatedAt()).isNotNull();
 	}
 	
@@ -65,13 +54,11 @@ public class DocKindJpaRepositoryTest {
 		docKindJpaRepository.save(docKindJpaEntity);
 		
 		// when
-		KindId kindId = 복합키생성하기();
+		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(testDocKindCd).orElse(null);
 		
-		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(kindId).orElse(docKindJpaEntity);
-		
-		assertThat(docKindJpaResultEntity.getKindId().getKindCd()).isEqualTo(testKindCd);
-		assertThat(docKindJpaResultEntity.getKindId().getPKindCd()).isEqualTo(testPKindCd);
-		assertThat(docKindJpaResultEntity.getKindNm()).isEqualTo(testKindNm);
+		assertThat(docKindJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
+		assertThat(docKindJpaResultEntity.getPDocKindCd()).isEqualTo(testPDocKindCd);
+		assertThat(docKindJpaResultEntity.getDocKindNm()).isEqualTo(testDocKindNm);
 		assertThat(docKindJpaResultEntity.getCreatedAt()).isNotNull();
 	}
 	
@@ -81,12 +68,10 @@ public class DocKindJpaRepositoryTest {
 		docKindJpaRepository.save(docKindJpaEntity);
 		
 		// when
-		KindId kindId = 복합키생성하기();
-		
-		docKindJpaRepository.deleteById(kindId);
+		docKindJpaRepository.deleteById(testDocKindCd);
 		
 		// then
-		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(kindId).orElse(docKindJpaEntity);
+		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(testDocKindCd).orElse(null);
 		
 		assertThat(docKindJpaResultEntity).isNotNull();
 	}
