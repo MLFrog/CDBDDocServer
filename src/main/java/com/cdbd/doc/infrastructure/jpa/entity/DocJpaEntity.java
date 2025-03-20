@@ -20,6 +20,10 @@ public class DocJpaEntity {
 	@Comment("문서번호")
 	private String docId;
 	
+	@Column(name = "doc_name")
+	@Comment("문서명")
+	private String docName;
+	
 	@Column(name = "user_id")
 	@Comment("사용자ID")	
 	private String userId;

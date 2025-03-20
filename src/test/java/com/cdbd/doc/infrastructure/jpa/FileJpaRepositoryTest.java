@@ -78,7 +78,7 @@ public class FileJpaRepositoryTest {
 		fileJpaRepository.save(fileJpaEntity);
 		
 		// when
-		fileJpaRepository.delete(fileJpaEntity);
+		fileJpaRepository.deleteById(testFileId);
 		
 		// then
 		FileJpaEntity fileJpaResultEntity = fileJpaRepository.findById(testFileId).orElse(null);

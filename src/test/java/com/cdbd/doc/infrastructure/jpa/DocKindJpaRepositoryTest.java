@@ -21,7 +21,7 @@ public class DocKindJpaRepositoryTest {
 	private DocKindJpaEntity docKindJpaEntity;
 	
 	final private String testDocKindCd = "DOC001";
-	final private String testPDocKindCd = "0";
+	final private String testPDocKindCd = null;
 	final private String testDocKindNm = "계약서";
 	
 	@BeforeEach
@@ -73,6 +73,6 @@ public class DocKindJpaRepositoryTest {
 		// then
 		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(testDocKindCd).orElse(null);
 		
-		assertThat(docKindJpaResultEntity).isNotNull();
+		assertThat(docKindJpaResultEntity).isNull();
 	}
 }
