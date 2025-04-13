@@ -9,12 +9,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "file")
 @Comment("파일")
+@Builder
 public class FileJpaEntity {
 	@Id
 	@Column(name = "file_id")
@@ -36,6 +38,10 @@ public class FileJpaEntity {
 	@Column(name = "file_ext")
 	@Comment("파일확장자")
 	private String fileExt;
+	
+	@Column(name = "file_size")
+	@Comment("파일크기")
+	private long fileSize;
 	
 	@Column(name = "create_at")
 	@Comment("생성일시")

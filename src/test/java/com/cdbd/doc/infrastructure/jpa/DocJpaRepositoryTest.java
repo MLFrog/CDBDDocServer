@@ -29,7 +29,7 @@ public class DocJpaRepositoryTest{
 	@BeforeEach
 	public void 엔터티생성() {
 		// given
-		docJpaEntity = new DocJpaEntity();
+//		docJpaEntity = new DocJpaEntity();
 		
 		docJpaEntity.setDocId(testDocId);
 		docJpaEntity.setDocKindCd(testDocKindCd);
