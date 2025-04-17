@@ -12,14 +12,14 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cdbd.doc.infrastructure.jpa.entity.DocJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.repository.DocJpaRepository;
+import com.cdbd.doc.infrastructure.jpa.entity.DocEntity;
+import com.cdbd.doc.infrastructure.jpa.repository.DocRepository;
 @SpringBootTest
-public class DocJpaRepositoryTest{
+public class DocRepositoryTest{
 	@Autowired
-	private DocJpaRepository docJpaRepository; 
+	private DocRepository docRepository; 
 	
-	private DocJpaEntity docJpaEntity;
+	private DocEntity docEntity;
 
 	final private String testDocId = "81c9ef13-a2c1-4421-bee3-cb0c7c9e3fe4";
 	final private String testDocKindCd = "DOC001";
@@ -29,14 +29,14 @@ public class DocJpaRepositoryTest{
 	@BeforeEach
 	public void 엔터티생성() {
 		// given
-//		docJpaEntity = new DocJpaEntity();
+//		docEntity = new docEntity();
 		
-		docJpaEntity.setDocId(testDocId);
-		docJpaEntity.setDocKindCd(testDocKindCd);
-		docJpaEntity.setDocVersionId(testDocVersionId);
-		docJpaEntity.setUserId(testUserId);
-		docJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		docJpaEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+		docEntity.setDocId(testDocId);
+		docEntity.setDocKindCd(testDocKindCd);
+		docEntity.setDocVersionId(testDocVersionId);
+		docEntity.setUserId(testUserId);
+		docEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		docEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class DocJpaRepositoryTest{
 		// given
 		
 		// when
-		DocJpaEntity docJpaResultEntity = docJpaRepository.save(docJpaEntity);
+		DocEntity docJpaResultEntity = docRepository.save(docEntity);
 		
 		// then
 		assertThat(docJpaResultEntity.getDocId()).isNotNull();
@@ -58,10 +58,10 @@ public class DocJpaRepositoryTest{
 	@Test
 	public void 문서조회하기() {
 		// given
-		docJpaRepository.save(docJpaEntity);
+		docRepository.save(docEntity);
 		
 		// when
-		DocJpaEntity docJpaResultEntity = docJpaRepository.findById(testDocId).orElse(null);
+		DocEntity docJpaResultEntity = docRepository.findById(testDocId).orElse(null);
 		
 		// then
 		assertThat(docJpaResultEntity.getDocId()).isEqualTo(testDocId);
@@ -75,13 +75,13 @@ public class DocJpaRepositoryTest{
 	@Test
 	public void 문서삭제하기() {
 		// given 
-		docJpaRepository.save(docJpaEntity);
+		docRepository.save(docEntity);
 		
 		// when 
-		docJpaRepository.deleteById(testDocId);
+		docRepository.deleteById(testDocId);
 		
 		// then 
-		DocJpaEntity docJpaResultEntity = docJpaRepository.findById(testDocId).orElse(null);
+		DocEntity docJpaResultEntity = docRepository.findById(testDocId).orElse(null);
 		
 		assertThat(docJpaResultEntity).isNull();
 	}

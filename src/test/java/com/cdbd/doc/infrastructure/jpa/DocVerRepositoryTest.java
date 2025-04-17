@@ -9,15 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cdbd.doc.infrastructure.jpa.entity.DocVerJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.repository.DocVerJpaRepository;
+import com.cdbd.doc.infrastructure.jpa.entity.DocVerEntity;
+import com.cdbd.doc.infrastructure.jpa.repository.DocVerRepository;
 
 @SpringBootTest
-public class DocVerJpaRepositoryTest {
+public class DocVerRepositoryTest {
 	@Autowired
-	private DocVerJpaRepository docVerJpaRepository;
+	private DocVerRepository docVerRepository;
 	
-	private DocVerJpaEntity docVerJpaEntity;
+	private DocVerEntity docVerEntity;
 	
 	final private String testDocVerId = "001";
 	final private String testFileId = "7f06bd96-e11d-4c2a-9b9c-c68b45d8a65e";
@@ -26,12 +26,12 @@ public class DocVerJpaRepositoryTest {
 	@BeforeEach
 	public void 엔터티생성() {
 		// given
-		docVerJpaEntity = new DocVerJpaEntity();
+		docVerEntity = new DocVerEntity();
 		
-		docVerJpaEntity.setDocVerId(testDocVerId);
-		docVerJpaEntity.setFileId(testFileId);
-		docVerJpaEntity.setUserId(testUserId);
-		docVerJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		docVerEntity.setDocVerId(testDocVerId);
+		docVerEntity.setFileId(testFileId);
+		docVerEntity.setUserId(testUserId);
+		docVerEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public class DocVerJpaRepositoryTest {
 		// given
 		
 		// when
-		DocVerJpaEntity docVerJpaResultEntity = docVerJpaRepository.save(docVerJpaEntity);
+		DocVerEntity docVerJpaResultEntity = docVerRepository.save(docVerEntity);
 		
 		// then
 		assertThat(docVerJpaResultEntity.getDocVerId()).isEqualTo(testDocVerId);
@@ -51,10 +51,10 @@ public class DocVerJpaRepositoryTest {
 	@Test
 	public void 문서버전조회하기() {
 		// given
-		docVerJpaRepository.save(docVerJpaEntity);
+		docVerRepository.save(docVerEntity);
 		
 		// when 
-		DocVerJpaEntity docVerJpaResultEntity = docVerJpaRepository.findById(testDocVerId).orElse(null);
+		DocVerEntity docVerJpaResultEntity = docVerRepository.findById(testDocVerId).orElse(null);
 		
 		// then
 		assertThat(docVerJpaResultEntity.getDocVerId()).isEqualTo(testDocVerId);
@@ -66,13 +66,13 @@ public class DocVerJpaRepositoryTest {
 	@Test
 	public void 문서버전삭제하기() {
 		// given
-		docVerJpaRepository.save(docVerJpaEntity);
+		docVerRepository.save(docVerEntity);
 		
 		// when
-		docVerJpaRepository.deleteById(testDocVerId);
+		docVerRepository.deleteById(testDocVerId);
 		
 		// then 
-		DocVerJpaEntity docVerJpaResultEntity = docVerJpaRepository.findById(testDocVerId).orElse(null);
+		DocVerEntity docVerJpaResultEntity = docVerRepository.findById(testDocVerId).orElse(null);
 		
 		assertThat(docVerJpaResultEntity).isNull();
 	}

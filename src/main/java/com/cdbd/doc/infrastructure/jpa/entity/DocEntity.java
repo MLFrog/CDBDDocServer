@@ -8,13 +8,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
-
 @Data
 @Entity
 @Table(name = "document")
 @Comment("문서")
-public class DocJpaEntity {
+@Builder
+public class DocEntity {
 	@Id
 	@Column(name = "doc_id")
 	@Comment("문서번호")

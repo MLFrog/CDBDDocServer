@@ -17,7 +17,7 @@ import lombok.Data;
 @Table(name = "file")
 @Comment("파일")
 @Builder
-public class FileJpaEntity {
+public class FileEntity {
 	@Id
 	@Column(name = "file_id")
 	@Comment("파일ID")

@@ -12,21 +12,21 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "doc_kind")
-@Comment("문서분류")
-public class DocKindJpaEntity {
+@Table(name = "document_version")
+@Comment("문서버전")
+public class DocVerEntity {
 	@Id
-	@Column(name = "doc_kind_cd")
-	@Comment("문서분류코드")
-	private String docKindCd;
+	@Column(name = "doc_ver_id")
+	@Comment("문서버전ID")
+	private String docVerId;
 	
-	@Column(name = "p_doc_kind_cd")
-	@Comment("부모문서분류코드")
-	private String pDocKindCd;
+	@Column(name = "user_id")
+	@Comment("사용자ID")
+	private String userId;
 	
-	@Column(name = "kind_nm")
-	@Comment("분류명")
-	private String docKindNm;
+	@Column(name = "file_id")
+	@Comment("파일ID")
+	private String fileId;
 	
 	@Column(name = "created_at")
 	@Comment("등록일")

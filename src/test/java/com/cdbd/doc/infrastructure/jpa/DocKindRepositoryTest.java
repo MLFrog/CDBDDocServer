@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cdbd.doc.infrastructure.jpa.entity.DocKindJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.repository.DocKindJpaRepository;
+import com.cdbd.doc.infrastructure.jpa.entity.DocKindEntity;
+import com.cdbd.doc.infrastructure.jpa.repository.DocKindRepository;
 
 @SpringBootTest
-public class DocKindJpaRepositoryTest {
+public class DocKindRepositoryTest {
 
 	@Autowired
-	private DocKindJpaRepository docKindJpaRepository;
+	private DocKindRepository docKindRepository;
 	
-	private DocKindJpaEntity docKindJpaEntity;
+	private DocKindEntity docKindEntity;
 	
 	final private String testDocKindCd = "DOC001";
 	final private String testPDocKindCd = null;
@@ -26,12 +26,12 @@ public class DocKindJpaRepositoryTest {
 	
 	@BeforeEach
 	public void 엔터티생성() {
-		docKindJpaEntity = new DocKindJpaEntity();
+		docKindEntity = new DocKindEntity();
 		
-		docKindJpaEntity.setDocKindCd(testDocKindCd);
-		docKindJpaEntity.setPDocKindCd(testPDocKindCd);
-		docKindJpaEntity.setDocKindNm(testDocKindNm);
-		docKindJpaEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		docKindEntity.setDocKindCd(testDocKindCd);
+		docKindEntity.setPDocKindCd(testPDocKindCd);
+		docKindEntity.setDocKindNm(testDocKindNm);
+		docKindEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public class DocKindJpaRepositoryTest {
 		// given
 		
 		// when
-		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.save(docKindJpaEntity);
+		DocKindEntity docKindJpaResultEntity = docKindRepository.save(docKindEntity);
 		
 		/// then
 		assertThat(docKindJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
@@ -51,10 +51,10 @@ public class DocKindJpaRepositoryTest {
 	@Test
 	public void 문서종류조회하기() {
 		// given
-		docKindJpaRepository.save(docKindJpaEntity);
+		docKindRepository.save(docKindEntity);
 		
 		// when
-		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(testDocKindCd).orElse(null);
+		DocKindEntity docKindJpaResultEntity = docKindRepository.findById(testDocKindCd).orElse(null);
 		
 		assertThat(docKindJpaResultEntity.getDocKindCd()).isEqualTo(testDocKindCd);
 		assertThat(docKindJpaResultEntity.getPDocKindCd()).isEqualTo(testPDocKindCd);
@@ -65,13 +65,13 @@ public class DocKindJpaRepositoryTest {
 	@Test
 	public void 문서종류삭제하기() {
 		// given
-		docKindJpaRepository.save(docKindJpaEntity);
+		docKindRepository.save(docKindEntity);
 		
 		// when
-		docKindJpaRepository.deleteById(testDocKindCd);
+		docKindRepository.deleteById(testDocKindCd);
 		
 		// then
-		DocKindJpaEntity docKindJpaResultEntity = docKindJpaRepository.findById(testDocKindCd).orElse(null);
+		DocKindEntity docKindJpaResultEntity = docKindRepository.findById(testDocKindCd).orElse(null);
 		
 		assertThat(docKindJpaResultEntity).isNull();
 	}
