@@ -6,9 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.cdbd.doc.infrastructure.jpa.entity.DocJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.entity.FileJpaEntity;
-import com.cdbd.doc.infrastructure.jpa.repository.DocJpaRepository;
+import com.cdbd.doc.infrastructure.jpa.entity.DocEntity;
+import com.cdbd.doc.infrastructure.jpa.entity.FileEntity;
+import com.cdbd.doc.infrastructure.jpa.repository.DocRepository;
+import com.cdbd.doc.infrastructure.jpa.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 // TODO: AOP를 이용한 GlobalException 으로 처리
 class DocumentService
 {
-	private final DocJpaRepository docJpaRepository;
+	private final DocRepository docRepository;
+	
+	private final FileRepository fileRepository;
 	
 	/**
 	 * 문서 생성하기
@@ -26,28 +29,27 @@ class DocumentService
 	 * @return
 	 * @throws Exception
 	 */
-	public DocJpaEntity createDocument(DocJpaEntity docJpaEntity, FileJpaEntity fileJpaEntity) {
+	public DocEntity createDocument(DocEntity docJpaEntity, FileEntity fileJpaEntity) {
 		// 1. 문서 존재 여부 확인
-		Assert.isNull(this.docJpaRepository.findById(docJpaEntity.getDocId()), "해당 문서가 등록되어 있습니다.");
+		Assert.isNull(this.docRepository.findById(docJpaEntity.getDocId()), "해당 문서가 등록되어 있습니다.");
 		
 		// 2. 문서 등록 
-		DocJpaEntity result = this.docJpaRepository.save(docJpaEntity);
+		DocEntity result = this.docRepository.save(docJpaEntity);
 		
 		// 3. 파일 등록
-		// TODO : 파일 서비스 등록 완료 후 작성 예정
+		this.fileRepository.save(fileJpaEntity);
 			
 		return result;
 	}
 	
 	/**
 	 * 문서 목록 조회하기
-	 * @param docId
 	 * @param docName
 	 * @param createAt
 	 * @return
 	 */
-	public List<DocJpaEntity> getDocumentList(String docId, String docName, Timestamp createAt) {
-		return this.docJpaRepository.findAll();
+	public List<DocEntity> getDocumentList(String docName, Timestamp createAt) {
+		return this.docRepository.findAll();
 	}
 	
 	/**
@@ -55,10 +57,10 @@ class DocumentService
 	 * @param docId
 	 * @return
 	 */
-	public DocJpaEntity getDocument(String docId) {
-		Assert.notNull(docId, "ID 값이 없습니다.");
+	public DocEntity getDocument(String docId) {
+		Assert.notNull(docId, "해당 ID 값이 없습니다.");
 		
-		return this.docJpaRepository.findById(docId).orElse(null);
+		return this.docRepository.findById(docId).orElse(null);
 	}
 	
 	/**
@@ -68,13 +70,13 @@ class DocumentService
 	 */
 	public void deleteDocument(String docId) {
 		// 1. 유효성 검증
-		Assert.notNull(docId, "ID 값이 없습니다.");
+		Assert.notNull(docId, "해당 ID 값이 없습니다.");
 		
 		// 2. 문서 유효성 검증
-		Assert.isNull(this.docJpaRepository.findById(docId), "해당 문서가 없습니다."); 
+		Assert.isNull(this.docRepository.findById(docId), "해당 문서가 없습니다."); 
 		
 		// 3. 문서 삭제
-		this.docJpaRepository.deleteById(docId);
+		this.docRepository.deleteById(docId);
 		
 		// 4. 파일 삭제
 	}
