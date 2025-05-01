@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -29,29 +30,40 @@ public class FileService {
 	    "jpg", "jpeg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx", "txt"
 	};
 	private final String rootPath = "/Users/hee/Documents/TEMP";
-	private final String invalidRegex = "^[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+	private final String invalidRegex = ".*[<>:\"/\\|?*].*";
 	
+	/**
+	 * 파일 등록
+	 * @param uploadFile
+	 * @return FileEntity
+	 * @throws IOException
+	 */
 	public FileEntity createFile(MultipartFile uploadFile) throws IOException {
 		// 1. 파일 업로드
 		FileEntity fileEntity = uploadFile(uploadFile);
 		
 		// 2. 파일 존재 여부 확인 
-		checkFileEntityValidation(fileEntity);
+		Assert.isNull(this.fileRepository.findById(fileEntity.getFileId()), "해당 파일이 등록되어 있습니다.");
 		
 		// 3. 파일 등록
 		return this.fileRepository.save(fileEntity);
 	}
 	
-	public List<FileEntity> getFileList(String fileId) {
-		return this.fileRepository.findAll();
-	
-	}
+	/**
+	 * 파일 조회(단건)
+	 * @param fileId
+	 * @return
+	 */
 	public FileEntity getFile(String fileId) {
 		Assert.notNull(fileId, "해당 ID 값이 없습니다.");
 		
 		return this.fileRepository.findById(fileId).orElse(null);
 	}
 	
+	/**
+	 * 파일 삭제(단건)
+	 * @param fileId
+	 */
 	public void deleteFile(String fileId) {
 		Assert.notNull(fileId, "해당 ID 값이 없습니다.");
 	
@@ -67,7 +79,6 @@ public class FileService {
 	public FileEntity uploadFile(MultipartFile uploadFile) throws IOException {
 		// 1. 파일 유효성 체크
 		checkUploadFileValidation(uploadFile);
-		
 		
 		long fileSize = uploadFile.getSize();
 		
@@ -102,10 +113,6 @@ public class FileService {
 				.fileSize(fileSize)
 				.createdAt(new Timestamp(System.currentTimeMillis()))
 				.build();
-	}
-	
-	public void checkFileEntityValidation(FileEntity fileEntity) {
-		Assert.isNull(this.fileRepository.findById(fileEntity.getFileId()), "해당 파일이 등록되어 있습니다.");
 	}
 	
 	public void checkUploadFileValidation(MultipartFile uploadFile) {
@@ -147,6 +154,6 @@ public class FileService {
 	}
 	
 	public boolean isValidateFileName(String fileName) {
-		return fileName.matches(invalidRegex);
+		return !fileName.matches(invalidRegex);
 	}
 }
